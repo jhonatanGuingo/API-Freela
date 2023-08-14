@@ -37,3 +37,24 @@ export async function getProductsByUser(req, res){
         res.status(500).send(err.message);
     }
 }
+
+export async function updateIsSold(req, res){
+    const {id} = req.params;
+    const {user} = res.locals;
+    try {
+        const searchProduct = await db.query(`SELECT * FROM products WHERE id = $1`, [id])
+
+        console.log(searchProduct.rows);
+
+        if(!searchProduct.rowCount > 0 || searchProduct.rows[0].userId != user.id){
+            res.status(404).send('O id do produto não existe');
+            return
+        }
+
+        await db.query(`UPDATE products SET sold = true WHERE id = $1`, [id]);
+        res.sendStatus(200)
+        
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
