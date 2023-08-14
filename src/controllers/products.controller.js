@@ -1,11 +1,11 @@
 import { db } from "../database/database.js";
 
 export async function addProduct(req, res){
-    const {name, description, category, img, price} = req.body;
+    const {nameProd, description, category, img, price} = req.body;
     const {user} = res.locals;
 
     try {
-        await db.query(`INSERT INTO products ("name", "description","category", "img", "userId", "price") VALUES ($1, $2, $3, $4, $5, $6)`, [name, description, category, img, user.id, price] )
+        await db.query(`INSERT INTO products ("nameProd", "description","category", "img", "userId", "price") VALUES ($1, $2, $3, $4, $5, $6)`, [nameProd, description, category, img, user.id, price] )
         res.status(201).send(user)
     } catch (err) {
         res.status(500).send(err.message);
@@ -54,6 +54,16 @@ export async function updateIsSold(req, res){
         await db.query(`UPDATE products SET sold = true WHERE id = $1`, [id]);
         res.sendStatus(200)
         
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export async function viewProduct(req, res){
+    const {id} = req.params;
+    try {
+        const searchInfoProduct = await db.query(`SELECT products.*, users.name, users.number FROM products JOIN users ON "userId" = users.id WHERE products.id = $1;`, [id])
+        res.status(200).send(searchInfoProduct.rows);
     } catch (err) {
         res.status(500).send(err.message);
     }
