@@ -26,7 +26,7 @@ export async function getProductsByUser(req, res){
     const {token} = req.header;
 
     try {
-        const searchProducts = await db.query(`SELECT * FROM products WHERE "userId" = $1`, [user.id])
+        const searchProducts = await db.query(`SELECT * FROM products WHERE "userId" = $1`, [user.id]);
         console.log(searchProducts.rows)
         if(!searchProducts.rowCount > 0){
             res.status(404).send("O usuario n tem nenhum produto cadastrado")

@@ -43,7 +43,7 @@ export async function signIn(req, res) {
         email,
         password
     } = req.body;
-
+    
     try {
         const searchEmail = await db.query(`SELECT * FROM users WHERE email = $1`, [email]);
         if (!searchEmail.rowCount > 0) {
@@ -56,7 +56,9 @@ export async function signIn(req, res) {
             const token = uuid();
             await db.query(`INSERT INTO sessions ("token", "userId") VALUES ($1, $2)`, [token, userId])
             const meuToken = {
-                token: token
+                token: token,
+                name: searchEmail.rows[0].name
+
             }
             res.status(200).send(meuToken)
         } else {

@@ -15,7 +15,7 @@ export const schemaSignIn = Joi.object({
 })
 
 export const schemaProduct = Joi.object({
-    name: Joi.string().required(),
+    nameProd: Joi.string().required(),
     description: Joi.string(),
     category: Joi.string().required(),
     img: Joi.string()

@@ -9,6 +9,6 @@ const routerProducts = Router();
 routerProducts.post('/products', authValidation, validateSchema(schemaProduct), addProduct);
 routerProducts.get('/products', getProducts);
 routerProducts.get('/products/me', authValidation, getProductsByUser);
-routerProducts.put('/products/me/:id', authValidation, updateIsSold);
+routerProducts.put('/products/me', updateIsSold);
 routerProducts.get('/products/info/:id', viewProduct);
 export default routerProducts;
