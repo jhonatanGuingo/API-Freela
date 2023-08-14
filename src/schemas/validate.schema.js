@@ -14,3 +14,13 @@ export const schemaSignIn = Joi.object({
     password: Joi.string().required().min(3)
 })
 
+export const schemaProduct = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string(),
+    category: Joi.string().required(),
+    img: Joi.string()
+    .uri({ scheme: ['http', 'https'] }) // Aceita apenas URLs com os esquemas 'http' ou 'https'
+    .trim() // Remove espaços em branco no início e no final da URL
+    .required(),
+    price: Joi.number().positive().required()
+})
