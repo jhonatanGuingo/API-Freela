@@ -28,10 +28,10 @@ export async function getProductsByUser(req, res){
     try {
         const searchProducts = await db.query(`SELECT * FROM products WHERE "userId" = $1`, [user.id]);
         console.log(searchProducts.rows)
-        if(!searchProducts.rowCount > 0){
-            res.status(404).send("O usuario n tem nenhum produto cadastrado")
-            return
-        }
+      //  if(!searchProducts.rowCount > 0){
+       //     res.status(404).send("O usuario n tem nenhum produto cadastrado")
+       //     
+      //  }
         res.status(200).send(searchProducts.rows)
     } catch (err) {
         res.status(500).send(err.message);
